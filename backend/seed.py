@@ -1,4 +1,5 @@
 """Seed demo data for PlantPulse AI."""
+import os
 from datetime import datetime, timedelta
 from app import create_app
 from app.models.user import User
@@ -7,12 +8,15 @@ from app.models.local_store import store
 app = create_app()
 
 with app.app_context():
+    admin_pw = os.getenv('DEMO_ADMIN_PASSWORD', 'admin123')
+    engineer_pw = os.getenv('DEMO_ENGINEER_PASSWORD', 'engineer123')
+
     admin = User.find_by_email('admin@plantpulse.ai')
     if not admin:
         uid = User.save({
             'name': 'Admin User',
             'email': 'admin@plantpulse.ai',
-            'password': 'admin123',
+            'password': admin_pw,
             'role': 'Admin',
             'is_active': True
         })
@@ -25,7 +29,7 @@ with app.app_context():
         uid = User.save({
             'name': 'Engineer User',
             'email': 'engineer@plantpulse.ai',
-            'password': 'engineer123',
+            'password': engineer_pw,
             'role': 'Engineer',
             'is_active': True
         })
@@ -89,5 +93,3 @@ with app.app_context():
 
     print('Maintenance records seeded')
     print('\n=== Seed Complete ===')
-    print('Login: admin@plantpulse.ai / admin123')
-    print('Login: engineer@plantpulse.ai / engineer123')

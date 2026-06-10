@@ -18,13 +18,15 @@ def _auto_seed(app):
         if store.find_one('users', {'email': 'admin@plantpulse.ai'}):
             return
         from app.models.user import User
+        admin_pw = os.getenv('DEMO_ADMIN_PASSWORD', 'admin123')
+        engineer_pw = os.getenv('DEMO_ENGINEER_PASSWORD', 'engineer123')
         User.save({
             'name': 'Admin User', 'email': 'admin@plantpulse.ai',
-            'password': 'admin123', 'role': 'Admin', 'is_active': True
+            'password': admin_pw, 'role': 'Admin', 'is_active': True
         })
         User.save({
             'name': 'Engineer User', 'email': 'engineer@plantpulse.ai',
-            'password': 'engineer123', 'role': 'Engineer', 'is_active': True
+            'password': engineer_pw, 'role': 'Engineer', 'is_active': True
         })
         assets = [
             {'assetId': 'MTR-101', 'assetName': 'Main Conveyor Motor', 'category': 'Motor', 'location': 'Plant A - Line 1', 'capacity': '50 HP', 'vendor': 'ABB', 'installationDate': '2023-06-15', 'healthScore': 88, 'status': 'Running'},
@@ -65,7 +67,7 @@ def _auto_seed(app):
         ]
         for m in maint:
             store.insert('maintenance', {**m, 'createdAt': now, 'updatedAt': now})
-        print('[PlantPulse] Demo data seeded: admin@plantpulse.ai / admin123')
+        print('[PlantPulse] Demo data seeded')
 
 
 def _init_mongo(app):
@@ -90,7 +92,12 @@ def create_app(config_name=None):
         config_path = 'app.config.TestingConfig'
     app.config.from_object(config_path)
 
-    app.config['JWT_SECRET_KEY'] = os.getenv('JWT_SECRET_KEY', 'plantpulse-jwt-secret-key-32bytes!!!!')
+    jwt_key = os.getenv('JWT_SECRET_KEY')
+    if not jwt_key:
+        if config_name == 'production':
+            raise RuntimeError('JWT_SECRET_KEY environment variable is required in production')
+        jwt_key = 'dev-jwt-secret-key-change-in-production'
+    app.config['JWT_SECRET_KEY'] = jwt_key
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = 86400
     app.config['JWT_TOKEN_LOCATION'] = ['headers']
     app.config['JWT_HEADER_NAME'] = 'Authorization'
