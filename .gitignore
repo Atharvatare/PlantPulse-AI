@@ -1,0 +1,28 @@
+# Dependencies
+frontend/node_modules
+backend/venv
+backend/__pycache__
+*.pyc
+
+# Environment
+.env
+.env.local
+*.env.local
+
+# Build
+frontend/dist
+frontend/build
+*.log
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
