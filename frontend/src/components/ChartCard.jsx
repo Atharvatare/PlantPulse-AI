@@ -9,17 +9,22 @@ export default function ChartCard({ title, children, timeframes, onTimeframeChan
   };
 
   return (
-    <div className="bg-industrial-800/80 backdrop-blur-sm border border-industrial-700/50 rounded-xl p-5 hover:border-industrial-600/60 transition-all duration-200">
+    <div className="glass-panel-hover p-5 card-stagger">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-white">{title}</h3>
+        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
+          <span className="w-1 h-4 rounded-full bg-gradient-to-b from-primary-400 to-secondary-400" />
+          {title}
+        </h3>
         {timeframes && (
-          <div className="flex gap-1 bg-industrial-900/60 rounded-lg p-1">
+          <div className="flex gap-1 bg-industrial-800/80 rounded-lg p-0.5 ring-1 ring-white/5">
             {timeframes.map((tf) => (
               <button
                 key={tf}
                 onClick={() => handleClick(tf)}
-                className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all duration-150 ${
-                  active === tf ? 'bg-primary-600 text-white' : 'text-industrial-400 hover:text-white'
+                className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                  active === tf
+                    ? 'bg-primary-600 text-white shadow-sm'
+                    : 'text-industrial-400 hover:text-white hover:bg-industrial-750/40'
                 }`}
               >
                 {tf}

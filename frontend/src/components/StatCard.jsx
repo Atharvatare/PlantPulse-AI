@@ -13,9 +13,9 @@ export default function StatCard({ title, value, icon: Icon, trend, color = 'pri
   };
 
   const iconBgMap = {
-    primary: 'bg-primary-500/20', secondary: 'bg-secondary-500/20', warning: 'bg-yellow-500/20',
-    danger: 'bg-red-500/20', info: 'bg-blue-500/20', purple: 'bg-purple-500/20',
-    orange: 'bg-orange-500/20', teal: 'bg-teal-500/20'
+    primary: 'bg-primary-500/10', secondary: 'bg-secondary-500/10', warning: 'bg-yellow-500/10',
+    danger: 'bg-red-500/10', info: 'bg-blue-500/10', purple: 'bg-purple-500/10',
+    orange: 'bg-orange-500/10', teal: 'bg-teal-500/10'
   };
 
   const iconColorMap = {
@@ -24,31 +24,42 @@ export default function StatCard({ title, value, icon: Icon, trend, color = 'pri
     orange: 'text-orange-400', teal: 'text-teal-400'
   };
 
+  const borderMap = {
+    primary: 'border-primary-500/20 group-hover:border-primary-500/40',
+    secondary: 'border-secondary-500/20 group-hover:border-secondary-500/40',
+    warning: 'border-yellow-500/20 group-hover:border-yellow-500/40',
+    danger: 'border-red-500/20 group-hover:border-red-500/40',
+    info: 'border-blue-500/20 group-hover:border-blue-500/40',
+    purple: 'border-purple-500/20 group-hover:border-purple-500/40',
+    orange: 'border-orange-500/20 group-hover:border-orange-500/40',
+    teal: 'border-teal-500/20 group-hover:border-teal-500/40'
+  };
+
   return (
-    <div className="relative group">
-      <div className={`absolute inset-0 bg-gradient-to-br ${colorMap[color]} opacity-0 group-hover:opacity-10 rounded-xl transition-opacity duration-300`} />
-      <div className="relative bg-industrial-800/80 backdrop-blur-sm border border-industrial-700/50 rounded-xl p-5 hover:border-industrial-600/60 transition-all duration-200">
+    <div className="relative group card-stagger">
+      <div className={`absolute -inset-px bg-gradient-to-br ${colorMap[color]} opacity-0 group-hover:opacity-10 rounded-xl blur-sm transition-all duration-300`} />
+      <div className={`relative bg-industrial-800/70 backdrop-blur-sm border ${borderMap[color]} rounded-xl p-5 transition-all duration-200`}>
         <div className="flex items-start justify-between">
-          <div className="flex-1">
+          <div className="flex-1 min-w-0">
             <p className="text-xs font-medium text-industrial-400 uppercase tracking-wider">{title}</p>
-            <p className="text-2xl font-bold text-white mt-1">{value}</p>
-            {subtitle && <p className="text-xs text-industrial-400 mt-1">{subtitle}</p>}
+            <p className="text-2xl font-bold text-white mt-1.5 truncate">{value}</p>
+            {subtitle && <p className="text-xs text-industrial-400 mt-1.5">{subtitle}</p>}
           </div>
-          <div className={`p-3 rounded-lg ${iconBgMap[color]} ${iconColorMap[color]}`}>
+          <div className={`p-3 rounded-xl ${iconBgMap[color]} ${iconColorMap[color]} ring-1 ring-white/5`}>
             {Icon && <Icon size={22} />}
           </div>
         </div>
         {trend && (
-          <div className="flex items-center gap-1 mt-3 text-xs">
+          <div className="flex items-center gap-1.5 mt-4 pt-3 border-t border-industrial-700/30">
             {trend.direction === 'up' ? (
-              <FiTrendingUp className="text-green-400" />
+              <FiTrendingUp className="text-accent-400" size={14} />
             ) : (
-              <FiTrendingDown className="text-red-400" />
+              <FiTrendingDown className="text-red-400" size={14} />
             )}
-            <span className={trend.direction === 'up' ? 'text-green-400' : 'text-red-400'}>
+            <span className={`text-xs font-medium ${trend.direction === 'up' ? 'text-accent-400' : 'text-red-400'}`}>
               {trend.value}
             </span>
-            <span className="text-industrial-500">vs last month</span>
+            <span className="text-xs text-industrial-500">vs last month</span>
           </div>
         )}
       </div>

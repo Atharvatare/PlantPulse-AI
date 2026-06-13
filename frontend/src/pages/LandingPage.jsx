@@ -45,8 +45,8 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-industrial-900">
-      <header className="fixed top-0 left-0 right-0 z-50 bg-industrial-900/90 backdrop-blur-md border-b border-industrial-700/30">
+    <div className="min-h-screen bg-industrial-900 bg-[radial-gradient(ellipse_at_top_left,_rgba(99,102,241,0.05)_0%,_transparent_60%),radial-gradient(ellipse_at_bottom_right,_rgba(6,182,212,0.05)_0%,_transparent_60%)]">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-industrial-900/80 backdrop-blur-xl border-b border-industrial-700/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
