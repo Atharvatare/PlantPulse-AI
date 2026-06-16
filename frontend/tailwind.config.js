@@ -7,7 +7,21 @@ export default {
         primary: { 50: '#eef2ff', 100: '#e0e7ff', 200: '#c7d2fe', 300: '#a5b4fc', 400: '#818cf8', 500: '#6366f1', 600: '#4f46e5', 700: '#4338ca', 800: '#3730a3', 900: '#312e81', 950: '#1e1b4b' },
         secondary: { 50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee', 500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63', 950: '#083344' },
         accent: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b', 950: '#022c22' },
-        industrial: { 50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0', 300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b', 600: '#475569', 700: '#334155', 750: '#1e293b', 800: '#1a1f2e', 850: '#151923', 900: '#0f1219', 950: '#0a0d14' }
+        industrial: {
+          50: 'var(--color-bg-base)',
+          100: 'var(--color-bg-panel-hover)',
+          200: 'var(--color-border)',
+          300: 'var(--color-text-main)',
+          400: 'var(--color-text-secondary)',
+          500: '#64748b',
+          600: '#475569',
+          700: 'var(--color-border)',
+          750: 'var(--color-bg-panel-hover)',
+          800: 'var(--color-bg-panel)',
+          850: 'var(--color-bg-panel-hover)',
+          900: 'var(--color-bg-base)',
+          950: 'var(--color-bg-base-darker)'
+        }
       },
       fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'], mono: ['JetBrains Mono', 'monospace'] },
       animation: {

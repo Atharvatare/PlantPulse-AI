@@ -8,21 +8,9 @@ import AlertBadge from '../../components/AlertBadge';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { getKPIs, getCharts, getRecentAlerts } from '../../services/dashboardService';
 import { formatDate } from '../../utils/helpers';
+import { useTheme } from '../../context/ThemeContext';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, ArcElement, Title, Tooltip, Legend, Filler);
-
-const chartOpts = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: { labels: { color: '#94a3b8', usePointStyle: true, boxWidth: 6, padding: 12 } },
-    tooltip: { backgroundColor: '#1a1f2e', borderColor: '#334155', borderWidth: 1, titleColor: '#f8fafc', bodyColor: '#94a3b8', cornerRadius: 8, padding: 10 }
-  },
-  scales: {
-    x: { grid: { color: '#1e293b', drawBorder: false }, ticks: { color: '#64748b', maxTicksLimit: 8 } },
-    y: { grid: { color: '#1e293b', drawBorder: false }, ticks: { color: '#64748b' } }
-  }
-};
 
 const kpiDefaults = [
   { title: 'Total Assets', value: '...', icon: FiServer, color: 'primary' },
@@ -34,6 +22,21 @@ const kpiDefaults = [
 ];
 
 export default function Dashboard() {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  const chartOpts = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: isDark ? '#94a3b8' : '#475569', usePointStyle: true, boxWidth: 6, padding: 12 } },
+      tooltip: { backgroundColor: isDark ? '#1a1f2e' : '#ffffff', borderColor: isDark ? '#334155' : '#e2e8f0', borderWidth: 1, titleColor: isDark ? '#f8fafc' : '#0f172a', bodyColor: isDark ? '#94a3b8' : '#475569', cornerRadius: 8, padding: 10 }
+    },
+    scales: {
+      x: { grid: { color: isDark ? '#1e293b' : '#f1f5f9', drawBorder: false }, ticks: { color: isDark ? '#64748b' : '#475569', maxTicksLimit: 8 } },
+      y: { grid: { color: isDark ? '#1e293b' : '#f1f5f9', drawBorder: false }, ticks: { color: isDark ? '#64748b' : '#475569' } }
+    }
+  };
   const [kpis, setKpis] = useState(kpiDefaults);
   const [alerts, setAlerts] = useState([]);
   const [chartData, setChartData] = useState(null);

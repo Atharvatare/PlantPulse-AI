@@ -4,6 +4,7 @@ import { FiDownload, FiCalendar } from 'react-icons/fi';
 import ChartCard from '../../components/ChartCard';
 import StatCard from '../../components/StatCard';
 import EmptyState from '../../components/EmptyState';
+import { useTheme } from '../../context/ThemeContext';
 
 const mockHealth = {
   labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -35,14 +36,22 @@ const mockDowntime = {
   datasets: [{ data: [35,25,25,15], backgroundColor: ['#6366f1','#ef4444','#f59e0b','#94a3b8'], borderWidth: 0 }]
 };
 
-const chartOpts = {
-  responsive: true, maintainAspectRatio: false,
-  plugins: { legend: { labels: { color: '#94a3b8', usePointStyle: true, boxWidth: 6 } } },
-  scales: { x: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } }, y: { grid: { color: '#1e293b' }, ticks: { color: '#64748b' } } }
-};
-
 export default function Analytics() {
   const [dateRange, setDateRange] = useState('YTD');
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  const chartOpts = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { labels: { color: isDark ? '#94a3b8' : '#475569', usePointStyle: true, boxWidth: 6 } }
+    },
+    scales: {
+      x: { grid: { color: isDark ? '#1e293b' : '#f1f5f9', drawBorder: false }, ticks: { color: isDark ? '#64748b' : '#475569' } },
+      y: { grid: { color: isDark ? '#1e293b' : '#f1f5f9', drawBorder: false }, ticks: { color: isDark ? '#64748b' : '#475569' } }
+    }
+  };
 
   return (
     <div className="space-y-6">
