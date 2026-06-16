@@ -10,6 +10,7 @@ All notable changes to PlantPulse AI will be documented in this file.
 - **Database-Agnostic Reports**: Replaced direct MongoDB `mongo.db` collection dependencies in `ReportService` with database-agnostic model wrapper queries, allowing the app to run seamlessly in `LocalStore` mode without 500 crashes.
 - **Report Meta Mapping**: Added report `name` and `type` fields mapping in `AIReport.to_dict()` so generated reports show up correctly in the frontend.
 - **Database Seeding Robustness**: Refactored the `_auto_seed` configuration script and standalone `seed.py` to seed the database using model `.save()` operations rather than raw `store.insert` calls.
+- **Local Port Migration**: Shifted local development port from 3000 to 3005 to bypass conflicting browser caching (e.g. from prior local mockups or practice folders) and avoid port bind collisions.
 
 ### Security
 - **HTTP Secure Headers**: Configured custom global secure headers (`X-Frame-Options`, `X-Content-Type-Options`, `X-XSS-Protection`, `Referrer-Policy`) for backend endpoints to enhance API security.
