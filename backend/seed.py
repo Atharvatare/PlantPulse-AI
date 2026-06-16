@@ -3,7 +3,10 @@ import os
 from datetime import datetime, timedelta
 from app import create_app
 from app.models.user import User
-from app.models.local_store import store
+from app.models.asset import Asset
+from app.models.work_order import WorkOrder
+from app.models.alert import Alert
+from app.models.maintenance import Maintenance
 
 app = create_app()
 
@@ -48,9 +51,10 @@ with app.app_context():
         {'assetId': 'PMP-402', 'assetName': 'Boiler Feed Pump', 'category': 'Pump', 'location': 'Plant B - Boiler Room', 'capacity': '75 HP', 'vendor': 'KSB', 'installationDate': '2022-09-15', 'healthScore': 55, 'status': 'Stopped'},
     ]
     for a in assets_data:
-        existing = store.find_one('assets', {'assetId': a['assetId']})
+        # Check if exists by assetId
+        existing = [item for item in Asset.find_all() if item.get('assetId') == a['assetId']]
         if not existing:
-            store.insert('assets', {**a, 'createdAt': datetime.utcnow().isoformat(), 'updatedAt': datetime.utcnow().isoformat()})
+            Asset.save({**a, 'createdAt': datetime.utcnow().isoformat(), 'updatedAt': datetime.utcnow().isoformat()})
             print(f'  + Asset: {a["assetId"]}')
         else:
             print(f'  = Exists: {a["assetId"]}')
@@ -63,9 +67,9 @@ with app.app_context():
         {'ticketNumber': 'WO-005', 'assetId': 'PMP-402', 'assignedEngineer': 'Vikram Joshi', 'assignedTo': 'Vikram Joshi', 'priority': 'High', 'status': 'In Progress', 'description': 'Boiler feed pump seal replacement', 'createdDate': (datetime.utcnow() - timedelta(days=3)).isoformat()},
     ]
     for wo in work_orders_data:
-        existing = store.find_one('work_orders', {'ticketNumber': wo['ticketNumber']})
+        existing = [item for item in WorkOrder.find_all() if item.get('ticketNumber') == wo['ticketNumber']]
         if not existing:
-            store.insert('work_orders', {**wo, 'createdAt': datetime.utcnow().isoformat(), 'updatedAt': datetime.utcnow().isoformat()})
+            WorkOrder.save({**wo, 'createdAt': datetime.utcnow().isoformat(), 'updatedAt': datetime.utcnow().isoformat()})
             print(f'  + WO: {wo["ticketNumber"]}')
         else:
             print(f'  = Exists: {wo["ticketNumber"]}')
@@ -78,7 +82,7 @@ with app.app_context():
         {'assetId': 'PMP-402', 'alertType': 'Pressure', 'severity': 'Warning', 'message': 'Boiler feed pump discharge pressure below minimum', 'isAcknowledged': False},
     ]
     for al in alerts_data:
-        store.insert('alerts', {'timestamp': datetime.utcnow().isoformat(), **al})
+        Alert.save({'timestamp': datetime.utcnow().isoformat(), **al})
 
     print('Alerts seeded')
 
@@ -89,7 +93,7 @@ with app.app_context():
         {'assetId': 'TRF-301', 'maintenanceType': 'Preventive', 'description': 'Oil filtration and dielectric testing', 'engineer': 'Sneha Patel', 'date': (datetime.utcnow() + timedelta(days=10)).isoformat(), 'remarks': 'Scheduled', 'cost': 0, 'status': 'Scheduled'},
     ]
     for m in maintenance_data:
-        store.insert('maintenance', {**m, 'createdAt': datetime.utcnow().isoformat(), 'updatedAt': datetime.utcnow().isoformat()})
+        Maintenance.save({**m, 'createdAt': datetime.utcnow().isoformat(), 'updatedAt': datetime.utcnow().isoformat()})
 
     print('Maintenance records seeded')
     print('\n=== Seed Complete ===')

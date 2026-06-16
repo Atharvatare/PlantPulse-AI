@@ -13,11 +13,16 @@ jwt = JWTManager()
 
 def _auto_seed(app):
     with app.app_context():
-        from app.models.local_store import store
         from datetime import datetime, timedelta
-        if store.find_one('users', {'email': 'admin@plantpulse.ai'}):
-            return
         from app.models.user import User
+        from app.models.asset import Asset
+        from app.models.work_order import WorkOrder
+        from app.models.alert import Alert
+        from app.models.maintenance import Maintenance
+
+        if User.find_by_email('admin@plantpulse.ai'):
+            return
+
         admin_pw = os.getenv('DEMO_ADMIN_PASSWORD', 'admin123')
         engineer_pw = os.getenv('DEMO_ENGINEER_PASSWORD', 'engineer123')
         User.save({
@@ -40,7 +45,7 @@ def _auto_seed(app):
         ]
         now = datetime.utcnow().isoformat()
         for a in assets:
-            store.insert('assets', {**a, 'createdAt': now, 'updatedAt': now})
+            Asset.save({**a, 'createdAt': now, 'updatedAt': now})
         wos = [
             {'ticketNumber': 'WO-001', 'assetId': 'CMP-201', 'assignedTo': 'Raj Kumar', 'priority': 'High', 'status': 'In Progress', 'description': 'Compressor vibration above threshold - inspect and repair bearings', 'createdDate': (datetime.utcnow() - timedelta(days=2)).isoformat()},
             {'ticketNumber': 'WO-002', 'assetId': 'PMP-401', 'assignedTo': 'Priya Sharma', 'priority': 'Critical', 'status': 'Open', 'description': 'Chemical feed pump failed - emergency repair needed', 'createdDate': (datetime.utcnow() - timedelta(hours=6)).isoformat()},
@@ -49,7 +54,7 @@ def _auto_seed(app):
             {'ticketNumber': 'WO-005', 'assetId': 'PMP-402', 'assignedTo': 'Vikram Joshi', 'priority': 'High', 'status': 'In Progress', 'description': 'Boiler feed pump seal replacement', 'createdDate': (datetime.utcnow() - timedelta(days=3)).isoformat()},
         ]
         for wo in wos:
-            store.insert('work_orders', {**wo, 'createdAt': now, 'updatedAt': now})
+            WorkOrder.save({**wo, 'createdAt': now, 'updatedAt': now})
         alerts = [
             {'assetId': 'PMP-401', 'alertType': 'Fault', 'severity': 'Critical', 'message': 'Chemical feed pump stopped unexpectedly', 'isAcknowledged': False},
             {'assetId': 'CMP-201', 'alertType': 'Vibration', 'severity': 'Warning', 'message': 'Air compressor vibration level exceeds threshold (7.2 mm/s)', 'isAcknowledged': False},
@@ -58,7 +63,7 @@ def _auto_seed(app):
             {'assetId': 'PMP-402', 'alertType': 'Pressure', 'severity': 'Warning', 'message': 'Boiler feed pump discharge pressure below minimum', 'isAcknowledged': False},
         ]
         for al in alerts:
-            store.insert('alerts', {'timestamp': now, **al})
+            Alert.save({'timestamp': now, **al})
         maint = [
             {'assetId': 'MTR-101', 'maintenanceType': 'Preventive', 'description': 'Quarterly bearing inspection', 'engineer': 'Raj Kumar', 'date': (datetime.utcnow() - timedelta(days=15)).isoformat(), 'cost': 2500, 'status': 'Completed'},
             {'assetId': 'CMP-201', 'maintenanceType': 'Corrective', 'description': 'Vibration analysis and rotor balancing', 'engineer': 'Amit Singh', 'date': (datetime.utcnow() - timedelta(days=7)).isoformat(), 'cost': 5800, 'status': 'Completed'},
@@ -66,7 +71,7 @@ def _auto_seed(app):
             {'assetId': 'TRF-301', 'maintenanceType': 'Preventive', 'description': 'Oil filtration and dielectric testing', 'engineer': 'Sneha Patel', 'date': (datetime.utcnow() + timedelta(days=10)).isoformat(), 'cost': 0, 'status': 'Scheduled'},
         ]
         for m in maint:
-            store.insert('maintenance', {**m, 'createdAt': now, 'updatedAt': now})
+            Maintenance.save({**m, 'createdAt': now, 'updatedAt': now})
         print('[PlantPulse] Demo data seeded')
 
 
@@ -104,6 +109,14 @@ def create_app(config_name=None):
     app.config['JWT_HEADER_TYPE'] = 'Bearer'
 
     CORS(app, resources={r'/api/*': {'origins': '*'}})
+
+    @app.after_request
+    def add_security_headers(response):
+        response.headers['X-Frame-Options'] = 'DENY'
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+        return response
 
     _init_mongo(app)
     jwt.init_app(app)

@@ -68,10 +68,13 @@ class AIReport:
     def to_dict(report):
         if report is None:
             return None
+        r_type = report.get('type', report.get('reportType', 'Health Analysis'))
         return {
             'id': str(report.get('_id', '')),
             'assetId': report.get('assetId', ''),
             'reportType': report.get('reportType', 'Health Analysis'),
+            'type': r_type,
+            'name': report.get('name', f"{r_type.capitalize()} Report"),
             'analysis': report.get('analysis', ''),
             'recommendation': report.get('recommendation', ''),
             'healthScore': report.get('healthScore'),

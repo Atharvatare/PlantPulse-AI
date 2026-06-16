@@ -42,7 +42,7 @@ export default function Dashboard() {
   useEffect(() => {
     Promise.all([getKPIs(), getCharts(), getRecentAlerts()])
       .then(([kpiRes, chartRes, alertRes]) => {
-        const d = kpiRes.data;
+        const d = kpiRes.data?.data || kpiRes.data || {};
         setKpis([
           { title: 'Total Assets', value: d.totalAssets || 0, icon: FiServer, color: 'primary', trend: d.assetTrend },
           { title: 'Running Assets', value: d.runningAssets || 0, icon: FiActivity, color: 'secondary', trend: d.runningTrend },
@@ -51,7 +51,7 @@ export default function Dashboard() {
           { title: 'Energy Consumption', value: d.energyConsumption || '0 kWh', icon: FiZap, color: 'info', subtitle: d.energyChange },
           { title: 'Maintenance Tasks', value: d.maintenanceTasks || 0, icon: FiTool, color: 'purple', subtitle: d.tasksDue },
         ]);
-        setChartData(chartRes.data);
+        setChartData(chartRes.data?.data || chartRes.data);
         setAlerts(alertRes.data?.data?.alerts || alertRes.data?.alerts || []);
       })
       .catch(() => {})
@@ -106,10 +106,10 @@ export default function Dashboard() {
 
       <div className="grid lg:grid-cols-2 gap-6">
         <ChartCard title="Asset Health Trend" timeframes={['7d', '30d', '90d']}>
-          <div className="h-64"><Line data={healthData} options={{ ...lineOpts, plugins: { ...lineOpts.plugins, legend: { display: false } } }} /></div>
+          <div className="h-64"><Line data={healthData} options={{ ...chartOpts, plugins: { ...chartOpts.plugins, legend: { display: false } } }} /></div>
         </ChartCard>
         <ChartCard title="Failure Prediction Trend" timeframes={['7d', '30d', '90d']}>
-          <div className="h-64"><Line data={failureData} options={{ ...lineOpts, plugins: { ...lineOpts.plugins, legend: { display: false } } }} /></div>
+          <div className="h-64"><Line data={failureData} options={{ ...chartOpts, plugins: { ...chartOpts.plugins, legend: { display: false } } }} /></div>
         </ChartCard>
       </div>
 
