@@ -9,22 +9,22 @@ export default function ChartCard({ title, children, timeframes, onTimeframeChan
   };
 
   return (
-    <div className="glass-panel-hover p-5 card-stagger">
+    <div className="bg-white dark:bg-industrial-800 border border-slate-200/80 dark:border-industrial-700/50 rounded-2xl p-5 shadow-sm card-stagger card-lift">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-          <span className="w-1 h-4 rounded-full bg-gradient-to-b from-primary-400 to-secondary-400" />
+        <h3 className="text-sm font-bold text-slate-800 dark:text-white flex items-center gap-2">
+          <span className="w-1 h-4 rounded-full bg-gradient-to-b from-primary-500 to-secondary-500" />
           {title}
         </h3>
         {timeframes && (
-          <div className="flex gap-1 bg-industrial-800/80 rounded-lg p-0.5 ring-1 ring-white/5">
+          <div className="flex gap-1 bg-slate-100 dark:bg-industrial-900 rounded-xl p-0.5 border border-slate-200/40 dark:border-industrial-700/30">
             {timeframes.map((tf) => (
               <button
                 key={tf}
                 onClick={() => handleClick(tf)}
-                className={`px-2.5 py-1 text-xs font-medium rounded-md transition-all duration-200 ${
+                className={`px-3 py-1 text-xs font-bold rounded-lg transition-all duration-200 ${
                   active === tf
-                    ? 'bg-primary-600 text-white shadow-sm'
-                    : 'text-industrial-400 hover:text-white hover:bg-industrial-750/40'
+                    ? 'bg-white dark:bg-industrial-800 text-slate-800 dark:text-white shadow-sm'
+                    : 'text-slate-500 dark:text-industrial-400 hover:text-slate-800 dark:hover:text-white'
                 }`}
               >
                 {tf}

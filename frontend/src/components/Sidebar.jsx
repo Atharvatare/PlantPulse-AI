@@ -21,28 +21,28 @@ export default function Sidebar({ open, onClose }) {
   const { isAdmin } = useAuth();
 
   const linkClass = ({ isActive }) =>
-    `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 ${
+    `flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 border relative ${
       isActive
-        ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20 shadow-sm shadow-primary-500/5'
-        : 'text-industrial-400 hover:text-white hover:bg-industrial-750/60 border border-transparent'
+        ? 'bg-primary-50 dark:bg-primary-500/10 text-primary-600 dark:text-primary-400 border-primary-100 dark:border-primary-500/20 shadow-sm'
+        : 'text-slate-500 hover:text-slate-800 dark:text-industrial-400 dark:hover:text-white hover:bg-slate-100/80 dark:hover:bg-industrial-750/50 border-transparent'
     }`;
 
   return (
     <>
-      {open && <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-20 lg:hidden" onClick={onClose} />}
-      <aside className={`fixed top-0 left-0 z-30 h-full w-64 bg-industrial-800/90 backdrop-blur-md border-r border-industrial-700/40 transform transition-transform duration-300 ease-out lg:translate-x-0 lg:static lg:z-auto ${open ? 'translate-x-0' : '-translate-x-full'}`}>
-        <div className="flex items-center justify-between h-16 px-4 border-b border-industrial-700/40 lg:hidden">
+      {open && <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-20 lg:hidden" onClick={onClose} />}
+      <aside className={`fixed top-0 left-0 z-30 h-full w-64 bg-white dark:bg-industrial-800 border-r border-slate-200/80 dark:border-industrial-700/40 transform transition-transform duration-300 ease-out lg:translate-x-0 lg:static lg:z-auto ${open ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="flex items-center justify-between h-16 px-4 border-b border-slate-200/60 dark:border-industrial-700/40 lg:hidden">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-sm">P</div>
-            <span className="text-sm font-bold text-white">PlantPulse <span className="text-secondary-400">AI</span></span>
+            <span className="text-sm font-bold text-slate-800 dark:text-white">PlantPulse <span className="text-primary-600 dark:text-secondary-400">AI</span></span>
           </div>
-          <button onClick={onClose} className="p-2 rounded-lg text-industrial-400 hover:text-white hover:bg-industrial-750/60 transition-colors">
+          <button onClick={onClose} className="p-2 rounded-lg text-slate-500 dark:text-industrial-400 hover:bg-slate-100 dark:hover:bg-industrial-750/60 transition-colors">
             <FiX size={18} />
           </button>
         </div>
 
         <div className="flex flex-col h-[calc(100%-4rem)] lg:h-full py-4 px-3">
-          <nav className="flex-1 space-y-1 overflow-y-auto">
+          <nav className="flex-1 space-y-1 overflow-y-auto pr-1">
             {links.map((link) => (
               <NavLink
                 key={link.to}
@@ -63,7 +63,7 @@ export default function Sidebar({ open, onClose }) {
             )}
           </nav>
 
-          <div className="pt-4 mt-4 border-t border-industrial-700/40 space-y-1">
+          <div className="pt-4 mt-4 border-t border-slate-200/60 dark:border-industrial-700/40 space-y-1">
             {bottomLinks.map((link) => (
               <NavLink key={link.to} to={link.to} onClick={onClose} className={linkClass}>
                 <link.icon size={18} />
@@ -72,10 +72,10 @@ export default function Sidebar({ open, onClose }) {
             ))}
           </div>
 
-          <div className="pt-4 mt-4 border-t border-industrial-700/40">
-            <div className="px-3 py-3 rounded-lg bg-gradient-to-br from-primary-500/5 to-secondary-500/5 border border-primary-500/10">
-              <p className="text-xs font-medium text-gradient">PlantPulse AI</p>
-              <p className="text-[10px] text-industrial-500 mt-0.5">v1.0.0 • Industrial IoT</p>
+          <div className="pt-4 mt-4 border-t border-slate-200/60 dark:border-industrial-700/40">
+            <div className="px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-industrial-900/50 border border-slate-200/50 dark:border-industrial-800/30 shadow-inner">
+              <p className="text-xs font-bold text-gradient uppercase tracking-wider">PlantPulse AI</p>
+              <p className="text-[10px] text-slate-400 dark:text-industrial-500 mt-1 font-medium">v1.1.0 • Industrial IoT</p>
             </div>
           </div>
         </div>

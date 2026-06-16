@@ -7,9 +7,12 @@ export default function DashboardLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-industrial-900 bg-[radial-gradient(ellipse_at_top_right,_rgba(99,102,241,0.03)_0%,_transparent_50%),radial-gradient(ellipse_at_bottom_left,_rgba(6,182,212,0.03)_0%,_transparent_50%)] flex">
+    <div className="min-h-screen bg-slate-50 dark:bg-industrial-950 flex transition-colors duration-300 relative overflow-hidden">
+      {/* Subtle top-right background accent glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[300px] bg-gradient-to-b from-primary-500/5 dark:from-primary-500/2 to-transparent pointer-events-none z-0" />
+      
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="flex-1 flex flex-col min-w-0">
+      <div className="flex-1 flex flex-col min-w-0 z-10">
         <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} sidebarOpen={sidebarOpen} />
         <main className="flex-1 p-4 lg:p-6 overflow-auto">
           <Outlet />
