@@ -54,11 +54,9 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-stone-50 text-stone-900 dark:bg-industrial-900 dark:text-industrial-300 transition-colors duration-300 selection:bg-primary-500/20">
-      {/* Radial glows matching green theme */}
-      <div className="absolute top-0 left-0 right-0 h-[500px] bg-gradient-to-b from-primary-500/5 via-secondary-500/2 to-transparent pointer-events-none" />
-      <div className="absolute top-40 left-1/4 w-96 h-96 bg-primary-500/5 dark:bg-primary-500/2 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-60 right-1/4 w-80 h-80 bg-secondary-500/5 dark:bg-secondary-500/2 rounded-full blur-3xl pointer-events-none" />
+    <div className="min-h-screen bg-stone-50 text-stone-900 dark:bg-industrial-900 dark:text-industrial-300 transition-colors duration-300 selection:bg-primary-500/20 relative overflow-hidden">
+      {/* Animated organic mesh background */}
+      <div className="mesh-gradient-bg" />
 
       {/* Navigation Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-industrial-900/80 backdrop-blur-xl border-b border-stone-200 dark:border-industrial-700/30 transition-colors duration-300">
@@ -129,7 +127,7 @@ export default function LandingPage() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden page-enter">
+      <section className="relative pt-32 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden page-enter z-10">
         <div className="max-w-7xl mx-auto text-center relative">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary-100/60 dark:bg-primary-500/10 border border-primary-200 dark:border-primary-500/20 text-primary-800 dark:text-primary-400 text-xs font-bold mb-6 shadow-sm">
             <span className="w-2 h-2 bg-primary-600 dark:bg-primary-400 rounded-full animate-pulse" />
@@ -139,7 +137,7 @@ export default function LandingPage() {
             Smart Industrial <br className="hidden sm:inline" />
             <span className="text-gradient">Monitoring Platform</span>
           </h1>
-          <p className="text-base sm:text-lg text-stone-600 dark:text-industrial-400 max-w-2xl mx-auto mb-10 leading-relaxed font-medium">
+          <p className="text-base sm:text-lg text-stone-600 dark:text-industrial-400 max-w-2xl mx-auto mb-10 leading-relaxed font-semibold">
             Harness the power of AI to predict failures, optimize maintenance workflows, and maximize uptime across your industrial operations.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -200,7 +198,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-stone-200 dark:border-industrial-800/20">
+      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 border-t border-stone-200 dark:border-industrial-800/20 z-10 relative">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 dark:text-white mb-4 tracking-tight">Powerful Capabilities</h2>
@@ -224,7 +222,7 @@ export default function LandingPage() {
       </section>
 
       {/* Stats Section */}
-      <section id="stats" className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-100/50 dark:bg-industrial-950/30 border-y border-stone-200 dark:border-industrial-800/40 relative">
+      <section id="stats" className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-100/50 dark:bg-industrial-950/30 border-y border-stone-200 dark:border-industrial-800/40 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-3xl sm:text-4xl font-bold text-stone-900 dark:text-white mb-4 tracking-tight">Proven Efficiency</h2>
@@ -237,7 +235,7 @@ export default function LandingPage() {
                   {i === 0 ? counters[i].toLocaleString() + '+' : counters[i] + '%'}
                 </p>
                 <p className="text-sm font-bold text-stone-900 dark:text-white mt-2">{s.label}</p>
-                <p className="text-xs text-stone-400 dark:text-industrial-500 mt-1 font-semibold">{s.suffix}</p>
+                <p className="text-xs text-stone-450 dark:text-industrial-500 mt-1 font-semibold">{s.suffix}</p>
               </div>
             ))}
           </div>
@@ -245,7 +243,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer Section */}
-      <footer className="border-t border-stone-200 dark:border-industrial-800/20 py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-industrial-950">
+      <footer className="border-t border-stone-200 dark:border-industrial-800/20 py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-industrial-950 z-10 relative">
         <div className="max-w-7xl mx-auto">
           <div className="grid sm:grid-cols-3 gap-10 mb-10">
             <div>
