@@ -66,41 +66,58 @@ body {
   background: var(--color-text-secondary);
 }
 
-/* Light mode text-white overrides to near-black stone-900 for readability */
-.light .text-white:not(.no-light-override) {
-  color: #1c1917;
+/* Light mode text-white overrides to near-black stone-900 on text blocks for readability */
+.light h1.text-white,
+.light h2.text-white,
+.light h3.text-white,
+.light h4.text-white,
+.light p.text-white,
+.light td.text-white,
+.light th.text-white,
+.light span.text-white:not(.no-light-override),
+.light div.text-white:not(.no-light-override) {
+  color: #1c1917 !important;
 }
 
-/* Explicit exceptions to keep true white on dark buttons and green gradient elements */
-.light button .text-white,
-.light button.text-white,
-.light button *,
-.light a.bg-primary-600 *,
+/* Explicit exceptions to keep true white on dark buttons and green elements in light mode */
 .light .bg-primary-600,
 .light .bg-primary-600 *,
-.light .bg-primary-500,
-.light .bg-primary-500 *,
-.light .bg-gradient-to-r,
-.light .bg-gradient-to-r *,
-.light .bg-gradient-to-br,
-.light .bg-gradient-to-br *,
-.light .bg-industrial-900 .text-white,
-.light .bg-industrial-950 .text-white,
-.light .toast *,
+.light .bg-primary-700,
+.light .bg-primary-700 *,
+.light .bg-primary-750,
+.light .bg-primary-750 *,
+.light .bg-primary-850,
+.light .bg-primary-850 *,
+.light .bg-primary-800,
+.light .bg-primary-800 *,
+.light .bg-stone-900,
+.light .bg-stone-900 *,
+.light .bg-slate-900,
+.light .bg-slate-900 *,
 .light .bg-red-500,
 .light .bg-red-500 *,
-.light .bg-green-500,
-.light .bg-green-500 *,
+.light .bg-red-600,
+.light .bg-red-600 *,
 .light .bg-green-600,
 .light .bg-green-600 *,
 .light .bg-green-700,
 .light .bg-green-700 *,
-.light .bg-yellow-500,
-.light .bg-yellow-500 *,
-.light .bg-cyan-500,
-.light .bg-cyan-500 *,
-.light .bg-indigo-600,
-.light .bg-indigo-600 * {
+.light .bg-emerald-600,
+.light .bg-emerald-600 *,
+.light .bg-emerald-700,
+.light .bg-emerald-700 *,
+.light .bg-amber-600,
+.light .bg-amber-600 *,
+.light .bg-amber-700,
+.light .bg-amber-700 *,
+.light .bg-gradient-to-r.text-white,
+.light .bg-gradient-to-r.text-white *,
+.light .bg-gradient-to-br.text-white,
+.light .bg-gradient-to-br.text-white *,
+.light .toast,
+.light .toast *,
+.light .no-light-override,
+.light .no-light-override * {
   color: #ffffff !important;
 }
 
